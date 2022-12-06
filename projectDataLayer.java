@@ -1012,6 +1012,7 @@ public class projectDataLayer{
       int userID = 0;
       String tmpMsg = new String();
       String dispMsg = new String();
+      String dbInfoMsg = new String();
       String enteredWord = inWord;
       String enteredWordLower = inWord.toLowerCase();
       String userData = new String();
@@ -1078,11 +1079,6 @@ public class projectDataLayer{
       //Compare the Entered String to List
       for(int x = 0; x < userDataList.size(); x++){
          if(userDataListLower.get(x).contains(enteredWord.toLowerCase())){
-            //Response for Matches found
-            dispMsg += "------------------------------------------------------" + "\n";
-            dispMsg += "Matches were found for: "+ enteredWord + "\n";
-            dispMsg += "------------------------------------------------------" + "\n";
-            dispMsg += "Listing matching users..." + "\n";
             //Now Pull Data for the Found Users from the Database
             try{
                //Once again, Faculty First
@@ -1097,9 +1093,9 @@ public class projectDataLayer{
                   String facPhone = findFacRS.getString(5);
                   String facBldg = findFacRS.getString(6);
                   String facRm = findFacRS.getString(7);
-                  dispMsg += "------------------------------------------------------" + "\n";
-                  dispMsg += "User Type: Faculty \nName: " + facName + "\nDepartment: " + facDept + "\nEmail: " + facEmail + "\nPhone Number: " + facPhone + "\nOffice Location: \nBuilding: " + facBldg + "\nRoom: " + facRm + "\n";
-                  dispMsg += userDataList.get(x);
+                  dbInfoMsg += "------------------------------------------------------" + "\n";
+                  dbInfoMsg += "User Type: Faculty \nName: " + facName + "\nDepartment: " + facDept + "\nEmail: " + facEmail + "\nPhone Number: " + facPhone + "\nOffice Location: \nBuilding: " + facBldg + "\nRoom: " + facRm + "\n";
+                  dbInfoMsg += userDataList.get(x);
                   resCount++;
                }//while
                //Now the Students
@@ -1111,9 +1107,9 @@ public class projectDataLayer{
                   String stuName = findStuRS.getString(2);   
                   String stuDept = findStuRS.getString(3);
                   String stuEmail = findStuRS.getString(4);
-                  dispMsg += "------------------------------------------------------" + "\n";
-                  dispMsg += "User Type: Student \nName: " + stuName + "\nDepartment: " + stuDept + "\nEmail: " + stuEmail + "\n";
-                  dispMsg += userDataList.get(x);
+                  dbInfoMsg += "------------------------------------------------------" + "\n";
+                  dbInfoMsg += "User Type: Student \nName: " + stuName + "\nDepartment: " + stuDept + "\nEmail: " + stuEmail + "\n";
+                  dbInfoMsg += userDataList.get(x);
                   resCount++;
                }//while
             }//try
@@ -1122,9 +1118,15 @@ public class projectDataLayer{
                sqle.printStackTrace();
             }//catch
          }//if
+      }//for
          //Check Result Count
          if(resCount > 0){
             tmpMsg = "";
+            //Response for Matches found
+            dispMsg += "------------------------------------------------------" + "\n";
+            dispMsg += "Matches were found for: "+ enteredWord + "\n";
+            dispMsg += "------------------------------------------------------" + "\n";
+            dispMsg += "Listing matching users..." + "\n";
          }//if   
          else{
             //Response for No Matches
@@ -1132,8 +1134,7 @@ public class projectDataLayer{
             tmpMsg += "No Matches Found for: " + enteredWord + "\n";
             tmpMsg += "------------------------------------------------------" + "\n";
          }//else
-      }//for
-      dispMsg = tmpMsg + dispMsg;
+      dispMsg = tmpMsg + dispMsg + dbInfoMsg;
       return (dispMsg);
    }//findMatching
    
