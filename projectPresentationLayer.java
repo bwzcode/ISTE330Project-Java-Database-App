@@ -523,7 +523,6 @@ public class projectPresentationLayer extends JFrame{
                            public void actionPerformed(ActionEvent ae){
                               String inKey = txtKey.getText();
                               String inUser = txtUsr.getText();
-                              System.out.println(inKey);
                               if(inKey.equals("") || inKey.equals(null)){
                                     JOptionPane.showMessageDialog(null,"Error: Empty Keyword ID","ERROR", JOptionPane.WARNING_MESSAGE);
                               }//if
